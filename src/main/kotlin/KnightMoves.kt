@@ -22,7 +22,7 @@ class KnightMoves {
             val source = getInput("Enter Source Coordinates (x,y): ").let { Square(it.first, it.second) }
             val destination = getInput("Enter Destination Coordinates (x,y): ").let { Square(it.first, it.second) }
 
-            KnightMoves().run { println(this.findMinimumSteps(source, destination, boardSize)) }
+            KnightMoves().run { println("Step count: ${this.findMinimumSteps(source, destination, boardSize)}") }
         }
 
         // Function to prompt user for board size and source/destination coordinates
