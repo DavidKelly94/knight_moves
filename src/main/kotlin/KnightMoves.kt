@@ -18,26 +18,26 @@ class KnightMoves {
     companion object Main {
         @JvmStatic
         fun main(args: Array<String>) {
-            val source = Square(0, 0)
-            val destination = Square(1, 2)
+            val source = Square(4, 5)
+            val destination = Square(3, 2)
 
-            KnightMoves().run { println(this.findMinimumSteps(source, destination)) }
+            KnightMoves().run { println(this.findMinimumSteps(source, destination, 10 to 10)) }
         }
     }
 
     // List of Pairs of all the possible directions (as x,y coordinates) to move from the current square
     private val moves = listOf(
-        2 to -1,
-        2 to 1,
-        -2 to 1,
-        -2 to -1,
         1 to 2,
         1 to -2,
         -1 to 2,
         -1 to -2,
+        2 to -1,
+        2 to 1,
+        -2 to 1,
+        -2 to -1,
     )
 
-    private fun findMinimumSteps(source: Square, destination: Square): Int {
+    private fun findMinimumSteps(source: Square, destination: Square, boardSize: Pair<Int, Int>): Int {
         // HashSet used to verify knight doesn't return to a square
         val previousMoves = HashSet<Square>()
         // Queue for keeping track of valid squares to move to that are unexplored beginning from the source
@@ -63,20 +63,20 @@ class KnightMoves {
                 for (move in moves) {
                     val x = currentSquare.x + move.first
                     val y = currentSquare.y + move.second
-                    if (isMoveOnBoard(x, y)) {
+                    if (isMoveOnBoard(x, y, boardSize)) {
                         queue.add(Square(x, y, stepsFromSrc + 1, currentSquare))
                     }
                 }
             }
         }
 
+        // Return -1 if no path is available
         return -1
     }
 
     // Used to verify a potential move is on the board
-    private fun isMoveOnBoard(x: Int, y: Int): Boolean {
-        val bounds = 0 until 8
-        return x in bounds && y in bounds
+    private fun isMoveOnBoard(x: Int, y: Int, boardSize: Pair<Int, Int>): Boolean {
+        return x in 0 until boardSize.first && y in 0 until boardSize.second
     }
 
     // Returns string representation of the path taken from source to destination
