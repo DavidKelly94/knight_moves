@@ -18,10 +18,21 @@ class KnightMoves {
     companion object Main {
         @JvmStatic
         fun main(args: Array<String>) {
-            val source = Square(4, 5)
-            val destination = Square(3, 2)
+            val boardSize = getInput("Enter Board Size (x,y): ")
+            val source = getInput("Enter Source Coordinates (x,y): ").let { Square(it.first, it.second) }
+            val destination = getInput("Enter Destination Coordinates (x,y): ").let { Square(it.first, it.second) }
 
-            KnightMoves().run { println(this.findMinimumSteps(source, destination, 10 to 10)) }
+            KnightMoves().run { println(this.findMinimumSteps(source, destination, boardSize)) }
+        }
+
+        // Function to prompt user for board size and source/destination coordinates
+        private fun getInput(message: String): Pair<Int, Int> {
+            print(message)
+            return readLine().let {
+                    input -> input!!.split(",").let {
+                        coordinates ->  coordinates[0].toInt() to coordinates[1].toInt()
+                }
+            }
         }
     }
 
